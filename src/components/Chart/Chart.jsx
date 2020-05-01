@@ -11,7 +11,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country} ) => {
         }
         fetchAPI();
     },[])
-     
+   
    const lineChart = (
     dailyData.length ? (<Line 
           data={{
@@ -46,7 +46,14 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country} ) => {
            }}
             options = {{
                 legend : {display: false },
-                title: { display: true, text: `Current state in ${country}`}
+                title: { display: true, text: `Current state in ${country}`},
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+                }
             }}
          />
        ): null
